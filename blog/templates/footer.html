@@ -1,0 +1,24 @@
+{% load bootstrap_icons %}
+<footer id="footer" class="container-fluid d-flex align-content-center">
+    <div class="d-flex justify-content-around align-content-center w-100">
+
+        <div class="d-flex align-items-center">
+            <span class="text-center">&copy; 2023 Pythoneers. Todos los derechos reservados.</span>
+        </div>
+
+        <div class="d-flex align-items-center">
+            <span class="me-3  text-center">Nuestras redes:</span>
+            <div class="d-flex gap-3">
+                <a class="text-info" href="https://www.facebook.com/" target="_blank">{% bs_icon 'facebook' size='1.5em' %}</a>
+                <a class="text-info" href="https://www.instagram.com/" target="_blank">{% bs_icon 'instagram' size='1.5em' %}</a>
+                <a class="text-info" href="https://www.twitter.com/" target="_blank">{% bs_icon 'twitter' size='1.5em' %}</a>
+            </div>
+        </div>
+
+        <div class="d-flex gap-3 align-items-center">
+            <span>¡Contactanos!</span>
+            <a class="text-info" href="{% url 'contact:contact' %}">{% bs_icon 'envelope-at-fill' size='1.5em' %}</a>
+        </div>
+
+    </div>
+</footer>

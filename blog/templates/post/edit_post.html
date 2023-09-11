@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    
+    <h1 class="text-info text-center">Modificar Post</h1>
+    <form method="POST" encrytype="multipart/form-data">
+        {% csrf_token %}
+        {% comment %} {{ form.as_p }} {% endcomment %}
+        {% comment %} TITULO {% endcomment %}
+        <div>
+            <label class="form-label" for="{{form.titulo.id_for_label}}">{{form.titulo.label}}:</label>
+            <input class="form-control" type="text" name="{{form.titulo.html_name}}" id="{{form.titulo.id_for_label}}" value="{{form.titulo.value}}">
+        </div> 
+            {% comment %} RESUMEN {% endcomment %}
+        <div class="mt-4">
+            <label for="{{form.resumen.id_for_label}}">{{form.resumen.label}}:</label>
+            <textarea class="form-control" name="{{form.resumen.html_name}}" id="{{form.resumen.id_for_label}}" cols="5" rows="3">{{form.resumen.value}}</textarea>
+        </div> 
+            {% comment %} CONTENIDO {% endcomment %}
+        <div class="mt-4">
+            <label for="{{form.contenido.id_for_label}}">{{form.contenido.label}}:</label>
+            <textarea class="form-control" name="{{form.contenido.html_name}}" id="{{form.contenido.id_for_label}}" cols="5" rows="5">{{form.contenido.value}}</textarea>
+        </div> 
+            {% comment %} IMAGEN {% endcomment %}
+        <div class="mb-3 mt-4">
+            <label for="{{form.imagen.id_for_label}}" class="form-label">{{form.imagen.label}}:</label>
+            <input class="form-control" type="file" id="{{form.imagen.id_for_label}}" name="{{form.imagen.html_name}}" value="{{form.imagen.url}}">
+        </div>
+            {% comment %} CATEGORIA {% endcomment %}
+        <select name="{{ form.categoria.html_name }}" class="form-control mb-4"> 
+            {% for categoria in form.categoria.field.queryset %}
+                <option value="{{ categoria.pk }} {% if categoria.pk == form.categoria.value %}selected{% endif %} ">{{ categoria }}</option>
+            {% endfor %}
+        </select>
+        <div class="text-center">
+            <input type="submit" value="Guardar Cambios" class="btn btn-outline-info mt-2">
+        </div>
+    </form>
+    <div class="text-center mt-4">
+        <a href="{% url 'post:new_categoria' %}?next={% url 'post:edit_post' pk=object.id %}" class="text-reset  ">Crear nueva categoría</a>
+    </div>
+</div>
+
+{% endblock content %}

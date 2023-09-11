@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Contacto{% endblock title %}
+
+{% block content %}
+<section  id="container_contact" style="width: 30rem;">
+    <form method="POST">
+        <div  class="d-flex flex-column">      
+            <h2 class="text-info text-center pb-2">Formulario de Contacto</h2>
+            <p>¡Nos encanta recibir tus sugerencias y comentarios! <br>Si tienes ideas que quisieras compartir con nosotros, o si deseas ser parte de nuestros creadores de contenido, no dudes en enviar el formulario. <br>¡Te aseguramos que responderemos a la brevedad posible! <br>Gracias por ser parte de nuestra familia en línea♡.</p>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="message {{message.tags}}">{{message}}</div>
+                {% endfor %}
+            {% endif %}
+            <div class="d-flex flex-column px-3" >
+                {% csrf_token %}
+                <div>
+                    <label class="form-label" for="{{form.name.id_for_label}}">Nombre:</label>
+                    <input class="form-control" type="text" name="{{form.name.html_name}}" id="{{form.name.id_for_label}}">
+                </div> 
+                <div class="mt-4">
+                    <label class="form-label" for="{{form.email.id_for_label}}">Correo:</label>
+                    <input class="form-control" type="email" name="{{form.email.html_name}}" id="{{form.email.id_for_label}}">
+                </div> 
+                <div class="mt-4">
+                    <label class="form-label" for="{{form.title.id_for_label}}">Título:</label>
+                    <input class="form-control" type="text" name="{{form.title.html_name}}" id="{{form.title.id_for_label}}">
+                </div> 
+                <div class="mt-4">
+                    <label for="{{form.message.id_for_label}}">Mensaje:</label>
+                    <textarea class="form-control" name="{{form.message.html_name}}" id="{{form.message.id_for_label}}" cols="5" rows="3"></textarea>
+                </div>
+            </div>
+            <input type="submit" value="enviar" class="btn btn-outline-info m-auto mt-3 px-3">
+        </div>
+    </form>
+</section>
+{% endblock content %}

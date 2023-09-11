@@ -1,0 +1,13 @@
+// Importar Bootstrap y otros archivos SASS
+@import "./bootstrap.scss";
+
+// Sobrescribir las variables de colores de Bootstrap u otras personalizaciones
+$primary: #1a0e2c;
+$secondary: #54159d;
+
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary
+);
+

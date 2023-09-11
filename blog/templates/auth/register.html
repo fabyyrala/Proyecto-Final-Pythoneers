@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Registrarse{% endblock %}
+{% block content %}
+  <form method="POST" >
+          <div id="container_register" class="mx-auto mb-5 form-control border-info p-4 d-flex flex-column align-content-center rounded-4"> 
+          {% csrf_token %}
+         <h3 class="mb-4 text-info text-center">Registrarse</h3>
+         {% comment %} campo de username {% endcomment %}
+          <div class="mt-2" >
+            <label for="{{form.username.id_for_label}}">{{form.username.label}}</label>
+            <input class="form-control" type="text" name="{{form.username.html_name}}" id="{{form.username.id_for_label}}">
+            <ul class="text-danger list-unstyled">
+              <li class="list-group">{{form.username.errors}}</li>
+            </ul>
+          </div>
+          {% comment %} campo de first_name {% endcomment %}
+          <div class="mt-2">
+            <label for="{{form.first_name.id_for_label}}">{{form.first_name.label}}</label>
+            <input class="form-control" type="text" name="{{form.first_name.html_name}}" id="{{form.first_name.id_for_label}}">
+            <ul class="text-danger list-unstyled">
+              <li class="list-group">{{form.first_name.errors}}</li>
+            </ul>
+          </div>
+          {% comment %} campo de last_name {% endcomment %}
+          <div class="mt-2">
+            <label for="{{form.last_name.id_for_label}}">{{form.last_name.label}}</label>
+            <input class="form-control" type="text" name="{{form.last_name.html_name}}" id="{{form.last_name.id_for_label}}">
+            <ul class="text-danger list-unstyled">
+              <li class="list-group">{{form.last_name.errors}}</li>
+            </ul>
+          </div>
+          {% comment %} campo de email {% endcomment %}
+          <div class="mt-2">
+            <label for="{{form.email.id_for_label}}">{{form.email.label}}</label>
+            <input class="form-control" type="email" name="{{form.email.html_name}}" id="{{form.email.id_for_label}}">
+            <ul class="text-danger list-unstyled">
+              <li class="list-group">{{form.email.errors}}</li>
+            </ul>
+          </div>
+          {% comment %} campo de password1 {% endcomment %}
+          <div class="mt-2">
+            <label for="{{form.password1.id_for_label}}">{{form.password1.label}}</label>
+            <input class="form-control" type="password" name="{{form.password1.html_name}}" id="{{form.password1.id_for_label}}">
+            <ul class="text-danger list-unstyled">
+              <li class="list-group">{{form.password1.errors}}</li>
+            </ul>
+          </div>
+          {% comment %} campo de password2 {% endcomment %}
+          <div class="mt-2">
+            <label for="{{form.password2.id_for_label}}">{{form.password2.label}}</label>
+            <input class="form-control" type="password" name="{{form.password2.html_name}}" id="{{form.password2.id_for_label}}">
+            <ul class="text-danger list-unstyled">
+              <li class="list-group">{{form.password2.errors}}</li>
+            </ul>
+          </div>
+          <span class="small text-center">
+            Todos los campos son obligatorios.
+          </span>
+          <input class="mt-4 mb-1 btn btn-outline-info mx-auto" type="submit" class="mt-4 btn btn-outline-info d-flex justify-content-center mx-auto" value="Confirmar">
+        </div>
+  </form>
+
+{% endblock content %}

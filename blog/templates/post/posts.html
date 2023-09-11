@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load collaborator_tags %}
+{% block title %}Posts{% endblock title %}
+
+{% block content %}
+<div class="container-fluid d-flex flex-column align-items-center m-auto">
+
+    <section class="w-100 d-flex justify-content-around mt-5">
+        <h1 class="text-center text-info mt-4">Todos los posts</h1>
+        {% if request.user.userprofile.is_collaborator or request.user|has_group:"Collaborator" or request.user.is_superuser %}
+        <div class="d-flex align-items-center mt-4">
+            <button type="button" class=" btn btn-outline-info">
+                <a class="text-decoration-none text-light" href="{% url 'post:new_post' %}">Crea un nuevo post</a>
+            </button>
+        </div>
+        {% endif %}
+    </section>
+    <section class="w-100 mt-4 d-flex align-content-center justify-content-center mb-4">
+        <h4 class="me-4 d-flex align-items-center p-0">Filtrar posts:</h4>
+
+        <li class="nav-item dropdown list-unstyled d-flex align-items-center border border-info p-2 rounded me-3">
+            <a class="nav-link dropdown-toggle text-center " data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Ordenar por:</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'post:posts' %}?orden=reciente">Más reciente</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{% url 'post:posts' %}?orden=antiguo">Más antiguo</a></li>
+              <li><a class="dropdown-item" href="{% url 'post:posts' %}?orden=alfabetico_asc">Alfabetico ascendente</a></li>
+              <li><a class="dropdown-item" href="{% url 'post:posts' %}?orden=alfabetico_desc">Alfabetico descentente</a></li>
+            </ul>
+          </li>
+          
+          <li class="nav-item dropdown list-unstyled d-flex align-items-center border border-info p-2 rounded">
+            <a class="nav-link dropdown-toggle text-center " data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Ordenar por categoria:</a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'post:posts' %}?categoria=todos">Todas las categorias</a></li>
+                <li><hr class="dropdown-divider"></li>
+                {% for categoria in categorias %}
+                    <li><a class="dropdown-item" href="{% url 'post:posts' %}?categoria={{categoria.titulo}}">{{categoria.titulo}}</a></li>
+                {% endfor %}
+            </ul>
+          </li>
+        
+    </section>
+    
+   
+    <div class=" pb-4 container d-flex flex-wrap justify-content-center">
+
+        {% for post in posts %}
+     
+            <div id="bg_post" class="border border-info m-4 rounded-3 p-2 d-flex flex-column align-items-center card" style="width: 22rem;">
+                <img id="img_post" class="rounded-3 my-3 " src="{{post.imagen.url}}" alt="imagen ilustrativa del post" >
+                <h4>{{post.titulo}}</h4>
+                <p>{{post.resumen}}</p>
+                <p>Autor: {{post.autor}}</p>
+                {% comment %} <div class="d-flex gap-4"> {% endcomment %}
+                    <p>Categoria: {{post.categoria}}</p>
+                    <p>Creación: {{post.fecha_creacion}}</p>
+                {% comment %} </div> {% endcomment %}
+                <button class="btn m-auto btn-outline-info mb-3"><a class="text-decoration-none text-light" id="button_post" href="{% url 'post:post_detail' post.id %}">Ver Post Completo</a></button>
+            </div>
+        {% empty %}
+        <p>No hay registros</p>    
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock content %}

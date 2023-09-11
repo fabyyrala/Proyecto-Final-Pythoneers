@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="d-flex flex-column align-items-center justify-content-center">
+    <h1 class="text-info mb-4">Agregar una nueva categoría</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {% comment %} {{form.as_p}} {% endcomment %}
+        <div class="m-4">
+            <label class="form-label" for="{{form.titulo.id_for_label}}">{{form.titulo.label}}:</label>
+            <input class="form-control" type="text" name="{{form.titulo.html_name}}" id="{{form.titulo.id_for_label}}">
+        </div> 
+        <div class="d-flex justify-content-center w-100">
+            <input type="submit" value="Guardar Categoria" class="btn btn-outline-info justify-items-center">
+        </div>
+    </form>
+    <div class="mt-5">
+        <a href="{% url 'post:list_categoria' %}" class="text-reset">Ver todas las categorias</a>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Login{% endblock title %}
+
+{% block content %}
+
+<div class=" d-flex align-items-center flex-column px-4 pt-5 pb-3 rounded-4 form-control border-info " id="login">
+    <h2 class="text-info">Iniciar sesión</h2>  
+    <form method="POST" class="container-fluid d-flex flex-column align-items-center">
+        {% csrf_token %}
+        <div class="my-4" >
+            <label for="{{form.username.id_for_label}}">{{form.username.label}}</label>
+            <input class="form-control" type="text" name="{{form.username.html_name}}" id="{{form.username.id_for_label}}">
+            <ul class="text-danger list-unstyled">
+              <li class="list-group">{{form.username.errors}}</li>
+            </ul>
+        </div>
+        <div>
+            <label for="{{form.password.id_for_label}}">{{form.password.label}}</label>
+            <input class="form-control" type="password" name="{{form.password.html_name}}" id="{{form.password.id_for_label}}">
+            <ul class="text-danger list-unstyled">
+              <li class="list-group">{{form.password.errors}}</li>
+        </div>
+        <input type="submit" value="Ingresar" class="mt-4 px-3 btn btn-outline-info">
+    </form>
+    <p class="mt-4 small">¿No tienes una cuenta? <a href="{% url 'user:register' %}" class="small text-info">Registrate</a></p>
+</div>
+
+{% endblock content %}

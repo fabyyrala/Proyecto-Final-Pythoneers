@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap_icons %}
+
+
+{% block content %}
+<div class="mt-5 bg-transparent d-flex flex-column justify-content-center align-content-center">
+  <h1 class="text-center text-info pb-5">{% bs_icon 'rocket-takeoff' size='0.8em' %}Las últimas noticias sobre IA, en un solo lugar{% bs_icon 'rocket-takeoff' size='0.8em' %}</h1>
+  <h4 class="text-center">Últimos Posteos </h4>
+  <div class="row justify-content-center ">
+    {% for post in recent_posts %}
+
+      <div id="bg_post" class="card border-info d-grid justify-content-center align-items-center  p-3 m-3" style="width: 15rem;">
+          <img id="img_post_recent" src="{{post.imagen.url}}" class="card-img-top">
+          
+          <div class="card-body px-0  d-flex align-items-center flex-column justify-content-end ">
+            <h5 class="card-title">{{post.titulo}}</h5>
+            <p class="">{{post.resumen}}</p>
+            <a href="{% url 'post:post_detail' post.id %}" class="btn btn-outline-info d-flex justify-content-center mx-3">Ver post completo</a>
+          </div>
+      </div>
+
+    {% endfor %}
+  </div>
+</div>
+{% endblock content %}

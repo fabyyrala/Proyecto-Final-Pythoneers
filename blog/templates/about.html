@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap_icons %}
+{% block title %}Sobre Nosotros{% endblock title %}
+
+{% block content %}
+<div style="width: 50%;">
+    <h1 class="text-info text-center pb-3">¡Bienvenidos!</h1>
+    <p> Esta página es el resultado del proyecto final de la Etapa 2 del Informatorio. <br>Un blog de noticias dedicado a mantenerte informado sobre las últimas novedades en Inteligencia Artificial (IA). Nuestro equipo apasionado busca compartir avances tecnológicos, aplicaciones y los impactos que la IA tiene en nuestras vidas. <br>Únete a nosotros mientras exploramos juntos el emocionante mundo de la IA. <br>¡Esperamos que disfrutes de nuestro blog!</p>
+    
+    <div class="d-flex justify-content-around mt-5">
+       <section class="d-flex flex-column">
+        <p>El grupo Pythoneers está conformado por:</p>
+        <ul>
+            <li class="list-group-item my-4"><span class="text-info">{% bs_icon 'person' size='1.5em' %}</span>Fabian Yrala</li>
+            <li class="list-group-item my-4"><span class="text-info">{% bs_icon 'person' size='1.5em' %}</span>Pedro Morinigo</li>
+            <li class="list-group-item my-4"><span class="text-info">{% bs_icon 'person' size='1.5em' %}</span>Yamila Fogar</li>
+        </ul>
+       </section>
+       <section>
+        <img id="about" src="{% static '../media/src/about.png' %}" alt="about" width="300px">
+       </section>
+    </div>
+
+</div>
+{% endblock %}

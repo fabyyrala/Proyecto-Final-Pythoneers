@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load collaborator_tags %}
+{% load bootstrap_icons %}
+{% block title %}Eliminar Categoria{% endblock title %}
+
+{% block content %}
+    {% if user.is_superuser or request.user|has_group:"collaborator" %}
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <h1 class="text-light mb-3">Eliminar Categoría</h1>
+            <p>¿Estás seguro de que quieres eliminar la categoría {{categoria.titulo}}?</p>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="submit" value="Eliminar" class="btn btn-outline-danger me-3">
+                <a href="{% url 'post:list_categoria' %}" class="text-info  ms-3">Cancelar</a>
+            </form>
+        </div>
+    {% else %}
+    <p>
+        No tienes permiso para ver esta página.<span class="text-danger">{% bs_icon 'emoji-frown' size='1em' %}</span>
+    </p>
+    {% endif %}
+{% endblock content %}

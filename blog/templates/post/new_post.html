@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load collaborator_tags %}
+{% block title %}Nuevo Post{% endblock title %}
+{% block content %}
+<div id="new_post">
+{% if request.user.userprofile.is_collaborator or request.user|has_group:"Collaborator" or request.user.is_superuser or request.user.is_staff %}
+    
+    <section>
+        <h1 class="text-info text-center">Crear Post</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}    
+                {% comment %} TITULO {% endcomment %}
+            <div>
+                <label class="form-label" for="{{form.titulo.id_for_label}}">{{form.titulo.label}}:</label>
+                <input class="form-control" type="text" name="{{form.titulo.html_name}}" id="{{form.titulo.id_for_label}}">
+            </div> 
+                {% comment %} RESUMEN {% endcomment %}
+            <div class="mt-4">
+                <label for="{{form.resumen.id_for_label}}">{{form.resumen.label}}:</label>
+                <textarea class="form-control" name="{{form.resumen.html_name}}" id="{{form.resumen.id_for_label}}" cols="5" rows="3"></textarea>
+            </div> 
+                {% comment %} CONTENIDO {% endcomment %}
+            <div class="mt-4">
+                <label for="{{form.contenido.id_for_label}}">{{form.contenido.label}}:</label>
+                <textarea class="form-control" name="{{form.contenido.html_name}}" id="{{form.contenido.id_for_label}}" cols="5" rows="5"></textarea>
+            </div> 
+                {% comment %} IMAGEN {% endcomment %}
+            <div class="mb-3 mt-4">
+                <label for="{{form.imagen.id_for_label}}" class="form-label">{{form.imagen.label}}:</label>
+                <input class="form-control" type="file" id="{{form.imagen.id_for_label}}" name="{{form.imagen.html_name}}">
+            </div>
+                {% comment %} CATEGORIA {% endcomment %}
+            <select name="{{ form.categoria.html_name }}" class="form-control mb-4"> 
+                <option selected disabled>Selecciona una categoría</option>
+                {% for categoria in form.categoria.field.queryset %}
+                    <option value="{{ categoria.pk }} {% if categoria.pk == form.categoria.value %}selected{% endif %} ">{{ categoria }}</option>
+                {% endfor %}
+            </select>
+
+            <div class="d-flex justify-content-center">
+                <input type="submit" value="Guardar Post" class="btn btn-outline-info">
+            </div>
+              {{form.errors}}
+        </form>
+        <section class="d-flex justify-content-center mt-4">
+            <a class="text-reset" i="button_post" href="{% url 'post:new_categoria' %}">Crear nueva categoría</a>
+        </section>
+    </section>
+    {% else %}
+        <div>
+            <h1>Solo los usuarios con permisos pueden acceder a esta página.</h1>
+        </div>
+
+{% endif %}
+</div>
+{% endblock content %}
+
+

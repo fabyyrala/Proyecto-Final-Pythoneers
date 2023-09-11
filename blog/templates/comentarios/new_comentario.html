@@ -1,0 +1,56 @@
+{% load static %}
+{% load collaborator_tags %}
+{% load bootstrap_icons %}
+
+<section class="ps-4 d-flex flex-column justify-content-center align-content-center W-100">
+    <div class="container-fluid">
+        <h4 class="text-center text-light">Comentarios</h4>
+    </div>
+
+    <div class="container-fluid" id="container_comentarios">
+        {% for comentario in comentarios %}
+            <div id="container_comentario" class=" p-3 pb-0 rounded-4">
+                <p>{{comentario.contenido}}</p>
+                <div class="d-flex justify-content-between">
+                    <p>Autor: {{comentario.user}}</p>
+                    <p>Fecha: {{comentario.fecha_creacion}}</p>
+                </div>
+            </div>
+            {% if user.is_superuser or comentario.user == user %}
+                <ul class="list-unstyled d-flex justify-content-center pt-3">
+                    <a href="{% url 'post:edit_comentario' pk=comentario.pk %}?next={{request.path}}" class="text-info me-4">Editar Comentario</a>
+            {% endif %}
+            {% if user.is_superuser or comentario.user == user or request.user|has_group:"collaborator" %}
+                <a href="{% url 'post:delete_comentario' pk=comentario.pk %}" class="text-danger">Eliminar Comentario</a>
+            {% endif %}
+                </ul>
+        {% empty %}
+            <p>No hay comentarios - ¡Sé el primero en comentar!</p>
+        {% endfor %}
+    </div>
+
+    <div class="container-fluid mt-4">
+        <form method="POST">
+            {% csrf_token %}
+            {% if user.is_authenticated %}
+                <h5 class="text-center">Deja tu comentario <span class="text-info">{% bs_icon 'arrow-down' size='1em' %}</span></h5>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="d-flex flex-column align-items-center">
+                        <textarea class="form-control" name="{{form.contenido.html_name}}" id="{{form.contenido.id_for_label}}" cols="5" rows="4"></textarea>
+                        <input type="submit" value="Comentar" class="btn btn-outline-info mt-3">
+                    </div>
+                </form>
+            {% else %}
+            <div class="d-flex flex-column align-items-center mt-4 ">
+                <h4 class="pb-3">Para comentar, debes registrate o iniciar sesión.</h4>
+                <div class="d-flex">
+                    <a class="btn btn-outline-info me-4" href="{% url 'user:login' %}?next={{request.path}}#comentario">Iniciar Sesión</a>
+                    <a class="btn btn-outline-info ms-4" href="{% url 'user:register' %}?next={{request.path}}#comentario">Registrarse</a>
+                </div>
+            </div>
+                <input type="hidden" name="text" value={{request.path}}>
+            {% endif %}
+        </form>
+    </div>
+</section>

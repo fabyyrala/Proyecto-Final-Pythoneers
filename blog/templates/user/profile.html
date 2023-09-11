@@ -1,0 +1,42 @@
+{% extends "base.html" %} 
+{% load static %}
+{% block title %}Perfil {{user.username }}{% endblock title %}
+
+{% block content %}
+<div id="container-profile" class="d-flex align-items-center justify-content-around px-4 pt-4 pb-3 rounded-4 form-control border-info w-auto">
+    {% comment %} avatar user {% endcomment %}
+    <div class="px-4 d-flex flex-column justify-content-center align-content-center">
+        <div class="d-flex flex-column justify-content-center align-items-center mb-4">
+            <h4>Foto de perfil</h4>
+            <img src="{{user.userprofile.avatar.url}}" class="card-img-top rounded-circle" alt="Avatar" style="width:200px;">
+        </div>
+        {% comment %} subir una imagen {% endcomment %}
+        <div>
+            {% if request.user.is_authenticated and request.user == user %}
+            <p class="text-sm-center m-0">¿Cambiar foto de perfil?</p>
+            <form method="POST" enctype="multipart/form-data" class="d-flex flex-column gap-3 ">
+                {% csrf_token %}
+                <label for="{{updateAvatarForm.avatar.id_for_label}}"></label>
+                <input id="{{updateAvatarForm.avatar.id_for_label}}" type="file" name="{{updateAvatarForm.avatar.html_name}}" class="small">
+                {{updateAvatarForm.avatar.errors}}
+                {{updateAvatarForm.avatar.non_field_errors}}
+                <input type="submit" value="Subir foto" class="btn btn-outline-info mx-auto">
+            </form>
+            {% endif %}
+        </div>
+    </div>
+    {% comment %} datos user {% endcomment %}
+    <div class="ms-4">
+        <h2 class="text-info">Bienvenido {{user.first_name|capfirst}}</h2>
+        <div class="card-body pt-3">
+            <p class="text-decoration-underline">Información del perfil:</p>
+            <p class="card-text">Nombre de usuario: {{ user.username|capfirst }}</p>
+            <p class="card-text">Nombre: {{ user.first_name|capfirst }}</p>
+            <p class="card-text">Apellido: {{ user.last_name|capfirst }}</p>
+            <p class="card-text">Email: {{ user.email }}</p>
+            <p class="card-text">Creación de la cuenta: {{ user.date_joined }}</p>
+            <p class="card-text">Última actualización: {{ user.last_login }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

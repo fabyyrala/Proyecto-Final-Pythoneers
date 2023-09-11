@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load collaborator_tags %}
+{% block title %}Categorías{% endblock title %}
+{% load bootstrap_icons %}
+
+{% block content %}
+<div class="d-flex flex-column justify-content-center align-items-center">
+    <h1 class="text-decoration-underline text-info pb-4">Categorías</h1>
+    <ul>
+        {% for categoria in categorias %}
+        <div class="d-flex py-3">
+            <li class="list-unstyled ">
+                <span class="text-info">{% bs_icon 'hash' size='1.5em' %}</span>
+                <a id="linktext" href="{% url 'post:post_by_category' categoria.id %}" class="pe-4 text-light text-decoration-none" >
+                    {{categoria.titulo}}
+                </a>
+                {% if user.is_superuser or request.user|has_group:"collaborator" %}
+                <a  href="{% url 'post:delete_categoria' pk=categoria.pk %}" class="text-danger px-2">Eliminar Categoría</a>
+                {% endif %}
+            </li>
+        </div>
+        {% empty %}
+        <p>No existen categorias</p>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock content %}
